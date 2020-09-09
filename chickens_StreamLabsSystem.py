@@ -29,8 +29,16 @@ def Init():
     global settings
     directory = os.path.dirname(__file__)
 
-    with codecs.open(os.path.join(directory, "settings.json"), encoding='utf-8-sig') as json_file:
-        settings = json.load(json_file, encoding='utf-8-sig')
+    try:
+        with codecs.open(os.path.join(directory, "settings.json"), encoding='utf-8-sig') as json_file:
+            settings = json.load(json_file, encoding='utf-8-sig')
+    except Exception as e:
+        Parent.Log(e)
+        settings = {
+            'prizeAmount': 100,
+            'startGamePermission': 'moderator',
+            'participatePermission': 'everyone',
+        }
 
     return
 
@@ -40,19 +48,20 @@ def Init():
 # ---------------------------
 def Execute(data):
     command = data.GetParam(0)
-    if command == '!chickens':
+    user_id = data.User
+    if command == '!chickens' and Parent.HasPermission(user_id, settings['participatePermission'], ''):
         guess = data.GetParam(1)
         user_id = data.User
         user_name = data.UserName
         make_guess(user_name, user_id, guess)
 
-    elif command == '!chickenopen':
+    elif command == '!chickenstart' and Parent.HasPermission(user_id, settings['startGamePermission'], ''):
         open_guessing()
 
-    elif command == '!chickenclose':
+    elif command == '!chickenclose' and Parent.HasPermission(user_id, settings['startGamePermission'], ''):
         close_guessing()
 
-    elif command == '!chickenwinner':
+    elif command == '!chickenwinner' and Parent.HasPermission(user_id, settings['startGamePermission'], ''):
         winning_count = data.GetParam(1)
         get_winners(winning_count)
 
@@ -67,9 +76,9 @@ def Tick():
     return
 
 
-#---------------------------
+# ---------------------------
 #   [Optional] Reload Settings (Called when a user clicks the Save Settings button in the Chatbot UI)
-#---------------------------
+# ---------------------------
 def ReloadSettings(jsonData):
     # Execute json reloading here
     global settings

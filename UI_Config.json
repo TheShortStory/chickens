@@ -5,5 +5,29 @@
     "value": 100,
     "label": "Prize Amount (in channel currency)",
     "tooltip": "The amount of channel currency each winner gets"
+  },
+  "startGamePermission": {
+        "items": [
+            "everyone",
+            "moderator",
+            "subscriber",
+            "editor"
+        ],
+        "label": "Start Game Permission",
+        "tooltip": "Who is able to start and stop the chicken game",
+        "type": "dropdown",
+        "value": "moderator"
+  },
+  "participatePermission": {
+        "items": [
+            "everyone",
+            "moderator",
+            "subscriber",
+            "editor"
+        ],
+        "label": "Participate Permission",
+        "tooltip": "Who is allowed to make guesses for the chicken game",
+        "type": "dropdown",
+        "value": "everyone"
   }
 }
