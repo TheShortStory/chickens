@@ -1,0 +1,9 @@
+{
+  "output_file": "settings.json",
+  "prizeAmount": {
+    "type": "numberbox",
+    "value": 100,
+    "label": "Prize Amount (in channel currency)",
+    "tooltip": "The amount of channel currency each winner gets"
+  }
+}
