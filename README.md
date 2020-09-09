@@ -1,6 +1,6 @@
 # The Chicken Game
 
-Download the zip of this repo [here](), then upload it into Streamlabs Chatbot. Instructions here: https://streamlabs.com/content-hub/post/chatbot-scripts-desktop 
+Download the zip of this repo [here](https://github.com/TheShortStory/chickens/releases/tag/1.2.0), then upload it into Streamlabs Chatbot. Instructions here: https://streamlabs.com/content-hub/post/chatbot-scripts-desktop 
 
 ## Commands:
 
