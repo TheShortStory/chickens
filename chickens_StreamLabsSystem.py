@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import codecs
+from datetime import datetime
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 
@@ -12,7 +13,7 @@ ScriptName = "ChickenGame"
 Website = "sarah@sarahstoryengineering.com"
 Description = "Guess how many chickens will hatch!"
 Creator = "TheShortStory"
-Version = "1.2.0"
+Version = "1.3.0"
 
 # ---------------------------
 #   Global Variables
@@ -20,6 +21,7 @@ Version = "1.2.0"
 guessingOpen = False
 guesses = []
 settings = {}
+start_time = None
 
 
 # ---------------------------
@@ -33,11 +35,12 @@ def Init():
         with codecs.open(os.path.join(directory, "settings.json"), encoding='utf-8-sig') as json_file:
             settings = json.load(json_file, encoding='utf-8-sig')
     except Exception as e:
-        Parent.Log(e)
+        Parent.Log(ScriptName, e)
         settings = {
             'prizeAmount': 100,
             'startGamePermission': 'moderator',
             'participatePermission': 'everyone',
+            'timeLimit': 5,
         }
 
     return
@@ -73,6 +76,12 @@ def Execute(data):
 #   [Required] Tick method (Gets called during every iteration even when there is no incoming data)
 # ---------------------------
 def Tick():
+    guessing_time_limit = settings.get('timeLimit')
+    if start_time and guessingOpen and guessing_time_limit:
+        elapsed_time = (datetime.now() - start_time).total_seconds()
+        elapsed_time_minutes = elapsed_time / 60
+        if elapsed_time_minutes > guessing_time_limit:
+            close_guessing()
     return
 
 
@@ -94,6 +103,8 @@ def open_guessing():
     guesses = []
     global guessingOpen
     guessingOpen = True
+    global start_time
+    start_time = datetime.now()
     Parent.SendStreamMessage(
         "We're going to play the chicken game! Guess how many chickens will hatch using the !chickens command. The winners will get {} {}! Example: !chickens 4".format(
             settings['prizeAmount'], Parent.GetCurrencyName()
@@ -104,6 +115,8 @@ def open_guessing():
 def close_guessing():
     global guessingOpen
     guessingOpen = False
+    global start_time
+    start_time = None
     guess_string = ''
     for guess in guesses:
         guess_string += '{}: {}\n'.format(guess['user_name'], guess['number'])

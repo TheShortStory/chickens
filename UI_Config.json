@@ -6,6 +6,12 @@
     "label": "Prize Amount (in channel currency)",
     "tooltip": "The amount of channel currency each winner gets"
   },
+  "timeLimit": {
+    "type": "numberbox",
+    "value": 5,
+    "label": "Guessing Time Limit (in minutes)",
+    "tooltip": "The amount of time guessing will be open once the game has started."
+  },
   "startGamePermission": {
         "items": [
             "everyone",
