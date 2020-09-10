@@ -4,7 +4,7 @@ Download the zip of this repo [here](https://github.com/TheShortStory/chickens/r
 
 ## Commands:
 
-#### Streamer:
+#### Streamer/Mods:
 
 `!chickenstart`: Starts a new chicken game and opens up the floor for guessing.
 
